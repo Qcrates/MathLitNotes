@@ -1,0 +1,48 @@
+---
+title: "Caswell 2019 Reading Notes"
+author: "Shuyi Qiu"
+format: html
+editor: visual
+---
+
+**Caswell, Hal. 2019**. “The Formal Demography of Kinship: A Matrix Formulation.” *Demographic Research* 41:679-712,679A-679B. doi: [10.4054/DemRes.2019.41.24](https://doi.org/10.4054/DemRes.2019.41.24).
+
+## 2. The demography of kinship
+
+Why the mortality schedule $U$ is written like below (use $\omega = 3$ as an example):
+
+$$
+U =\begin{pmatrix} 0 & 0 & 0 \\p_1 & 0 & 0 \\0 & p_2 & [p_3] \\\end{pmatrix}
+$$
+
+$\omega$ is the number of age stage. For example, young, middle-age, old (or 1, 2, 3)
+
+$p$ is the survival probabilities of each stage, with nonzero values only on the sub-diagonal and zero values elsewhere.
+
+-   Why non-zero values only appear on the sub-diagonal? Because when people get older, they can only move to the next stage, so transition probability will only be non-zero for $U(i+1,i)$
+
+-   Then why $p_3$ is at the position of 3th row, 3th column? Because this example only have 3 stages and the third stage is the ending stage. Theoretically, for people at stage 3 at time $t$, they will enter age 4 if they survive at the probability of $p_3$ at time $t+1$ , but that will not be presented in this 3\*3 matrix.
+
+-   A confusing point to me: in Markov chain, $P_{ij}$ represents the transition probability matrix of the process, and each element $p_{ij}$ on row $i$ and column $j$ shows the transition probability from status $i$ to status $j$. In the mortality schedule, however, $u_{ij}$ is the probability from stage $j$ to stage $i$ (for example, $p_1$, or $u_{21}$ is the survival probability from age stage 1 to stage 2. This might just be different ways of math notations in different areas.
+
+-   So how to use this matrix? Say, the population vector at time t is $\textbf{n}_{t}$, it represents the number of people at each time stage. We still use the 3-stage example, then $\textbf{n}_{t}$ can be written out as:
+
+    $$
+    \textbf{n}_{t}= \begin{pmatrix} n_{1}^{t} \\ n_{2}^{t} \\ n_3^t \end{pmatrix}
+    $$
+
+    If we want to compute $\textbf{n}_{t+1}$, we just need to apply the mortality schedule matrix to the $\textbf{n}_{t}$.
+
+    $$
+    \textbf{n}_{t+1}=U\textbf{n}_t =\begin{pmatrix} 0 & 0 & 0 \\p_1 & 0 & 0 \\0 & p_2 & [p_3] \\\end{pmatrix} \begin{pmatrix} n_{1}^{t} \\ n_{2}^{t} \\ n_3^t \end{pmatrix} = \begin{pmatrix} 0 \\ n_{1}^{t}p_1 \\ n_2^tp_2 + n_3^tp_3 \end{pmatrix}
+    $$
+
+    To understand it intuitively:
+
+    -   There's no people at stage 1 at time $t+1$ because they move to the next stage and there's no newborn at this stage.
+
+    -   Number of people at stage 2 at time $t+1$ is the number of people at time $t$ survived from stage 1.
+
+    -   Number of people at stage 3 at time $t+1$ is the number of people at stage 2 at time $t$ survived and the remaining number of people at stage 3 survived (this part theoretically should be at age stage 4 but we do not present here...)
+
+-   www
